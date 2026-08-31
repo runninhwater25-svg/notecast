@@ -33,11 +33,11 @@ jobs:
       - name: Verify and package macOS app
         shell: bash
         run: |
-          APP="build/macos/Build/Products/Release/课程笔记.app"
+          APP="build/macos/Build/Products/Release/Notecast.app"
           test -d "$APP"
           codesign --verify --deep --strict --verbose=2 "$APP"
           mkdir -p release/dmg-root
-          ditto "$APP" "release/dmg-root/课程笔记.app"
+          ditto "$APP" "release/dmg-root/Notecast.app"
           ditto -c -k --sequesterRsrc --keepParent "$APP" "release/Notecast-macOS.zip"
           hdiutil create -volname "Notecast" -srcfolder "release/dmg-root" -ov -format UDZO "release/Notecast-macOS.dmg"
       - uses: actions/upload-artifact@v4
@@ -68,7 +68,7 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force release | Out-Null
-          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "/DMyAppVersion=1.1.0" "/DBuildDir=$pwd\build\windows\x64\runner\Release" "installer\notecast.iss"
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "/DMyAppVersion=1.1.1" "/DBuildDir=$pwd\build\windows\x64\runner\Release" "installer\notecast.iss"
           if (-not (Test-Path "release\Notecast-Windows-Setup.exe")) { throw "Windows installer was not created" }
       - uses: actions/upload-artifact@v4
         with:

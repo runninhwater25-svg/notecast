@@ -45,7 +45,7 @@ Flutter 与 Dart，共享 macOS、Windows、Android 的 UI 和业务逻辑；平
 ## Evidence on Hand
 
 - 已有可运行的 macOS 中文转写与 Qwen3 14B → Obsidian 工作流。
-- 已有课程笔记 App 图标与机场导视视觉方向。
+- 已有 Notecast App 图标与机场导视视觉方向。
 - 暂无商业背书、用户规模或准确率数据，不得自行编造。
 
 ## Product Principles

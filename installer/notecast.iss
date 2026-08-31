@@ -1,6 +1,6 @@
-#define MyAppName "Notecast 课程笔记"
+#define MyAppName "Notecast"
 #ifndef MyAppVersion
-  #define MyAppVersion "1.1.0"
+  #define MyAppVersion "1.1.1"
 #endif
 #ifndef BuildDir
   #define BuildDir "..\build\windows\x64\runner\Release"
@@ -23,17 +23,17 @@ WizardStyle=modern
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 PrivilegesRequired=lowest
-UninstallDisplayIcon={app}\course_notes_flutter.exe
+UninstallDisplayIcon={app}\Notecast.exe
 
 [Files]
 Source: "{#BuildDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
-Name: "{autoprograms}\Notecast 课程笔记"; Filename: "{app}\course_notes_flutter.exe"
-Name: "{autodesktop}\Notecast 课程笔记"; Filename: "{app}\course_notes_flutter.exe"; Tasks: desktopicon
+Name: "{autoprograms}\Notecast"; Filename: "{app}\Notecast.exe"
+Name: "{autodesktop}\Notecast"; Filename: "{app}\Notecast.exe"; Tasks: desktopicon
 
 [Tasks]
 Name: "desktopicon"; Description: "创建桌面快捷方式"; GroupDescription: "附加图标："; Flags: unchecked
 
 [Run]
-Filename: "{app}\course_notes_flutter.exe"; Description: "启动 Notecast 课程笔记"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\Notecast.exe"; Description: "启动 Notecast"; Flags: nowait postinstall skipifsilent

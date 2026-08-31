@@ -1,4 +1,4 @@
-# 课程笔记 Flutter MVP
+# Notecast
 
 跨平台课程笔记工具：录音或导入音频/文本 → 语音转写（文本会跳过）→ AI 结构化整理 → Markdown 编辑/预览 → Obsidian Vault 或 `.md` 导出。
 
@@ -6,7 +6,7 @@
 
 前往 [GitHub Releases](https://github.com/runninhwater25-svg/notecast/releases)：
 
-- macOS：下载 `Notecast-macOS.zip`，解压后得到“课程笔记.app”；也可下载 DMG。
+- macOS：下载 `Notecast-macOS.zip`，解压后得到 `Notecast.app`；也可下载 DMG。
 - Windows：下载 `Notecast-Windows-Setup.exe`，运行安装程序。
 
 当前 macOS 构建使用临时签名，未经过 Apple 公证。首次打开可能需要右键 App 选择“打开”。要消除该提示，需要 Apple Developer ID 证书和公证流程。

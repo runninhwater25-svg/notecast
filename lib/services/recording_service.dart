@@ -10,7 +10,7 @@ class RecordingService {
   Future<String> start() async {
     final recorder = _recorder ??= AudioRecorder();
     if (!await recorder.hasPermission()) {
-      throw StateError('没有麦克风权限。请在系统设置中允许“课程笔记”使用麦克风。');
+      throw StateError('没有麦克风权限。请在系统设置中允许“Notecast”使用麦克风。');
     }
     final root = await getApplicationDocumentsDirectory();
     final directory = Directory(p.join(root.path, 'recordings'));

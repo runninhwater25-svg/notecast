@@ -149,7 +149,7 @@ class _DesktopRail extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.fromLTRB(24, 28, 24, 30),
           child: Text(
-            '课程笔记',
+            'Notecast',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
           ),
         ),

@@ -14,7 +14,7 @@ class CourseNotesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-    title: '课程笔记',
+    title: 'Notecast',
     debugShowCheckedModeBanner: false,
     theme: buildTheme(),
     darkTheme: buildTheme(),
