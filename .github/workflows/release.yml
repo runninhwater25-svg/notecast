@@ -1,0 +1,96 @@
+name: Build and release desktop apps
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Optional version tag to publish, for example v1.1.0'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.1'
+          channel: stable
+          cache: true
+      - name: Resolve dependencies
+        run: flutter pub get
+      - name: Run tests
+        run: flutter test test/export_service_test.dart test/input_service_test.dart test/markdown_service_test.dart test/settings_dialog_test.dart test/widget_test.dart
+      - name: Build macOS app
+        run: flutter build macos --release
+      - name: Verify and package macOS app
+        shell: bash
+        run: |
+          APP="build/macos/Build/Products/Release/课程笔记.app"
+          test -d "$APP"
+          codesign --verify --deep --strict --verbose=2 "$APP"
+          mkdir -p release/dmg-root
+          ditto "$APP" "release/dmg-root/课程笔记.app"
+          ditto -c -k --sequesterRsrc --keepParent "$APP" "release/Notecast-macOS.zip"
+          hdiutil create -volname "Notecast" -srcfolder "release/dmg-root" -ov -format UDZO "release/Notecast-macOS.dmg"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-release
+          path: |
+            release/Notecast-macOS.zip
+            release/Notecast-macOS.dmg
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.1'
+          channel: stable
+          cache: true
+      - name: Resolve dependencies
+        run: flutter pub get
+      - name: Run tests
+        run: flutter test test/export_service_test.dart test/input_service_test.dart test/markdown_service_test.dart test/settings_dialog_test.dart test/widget_test.dart
+      - name: Build Windows app
+        run: flutter build windows --release
+      - name: Install Inno Setup
+        run: choco install innosetup --yes --no-progress
+      - name: Build Windows installer
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force release | Out-Null
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "/DMyAppVersion=1.1.0" "/DBuildDir=$pwd\build\windows\x64\runner\Release" "installer\notecast.iss"
+          if (-not (Test-Path "release\Notecast-Windows-Setup.exe")) { throw "Windows installer was not created" }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-release
+          path: release/Notecast-Windows-Setup.exe
+
+  publish:
+    if: startsWith(github.ref, 'refs/tags/') || inputs.release_tag != ''
+    needs: [macos, windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag || github.ref_name }}
+        run: |
+          gh release create "$RELEASE_TAG" artifacts/* \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "Notecast $RELEASE_TAG" \
+            --generate-notes
