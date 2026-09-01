@@ -1,6 +1,7 @@
 # Notecast 产品需求文档（PRD）
 
-> 最后更新：2026-09-01  
+> 最后更新：2026-09-01
+>
 > 当前版本范围：桌面 V1；Android 为同代码库待实机验证范围
 
 <!-- impeccable:product-schema 1 -->

@@ -1,6 +1,7 @@
 # Notecast 跨平台视觉系统
 
-> 最后更新：2026-09-01  
+> 最后更新：2026-09-01
+>
 > 职责：UI Guide；产品行为见 `PRODUCT.md`，业务异常见 `docs/BUSINESS_FLOW.md`
 
 ## 方向
