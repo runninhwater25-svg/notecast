@@ -1,4 +1,7 @@
-# Product
+# Notecast 产品需求文档（PRD）
+
+> 最后更新：2026-09-01  
+> 当前版本范围：桌面 V1；Android 为同代码库待实机验证范围
 
 <!-- impeccable:product-schema 1 -->
 
@@ -17,6 +20,20 @@ Flutter 与 Dart，共享 macOS、Windows、Android 的 UI 和业务逻辑；平
 ## Product Purpose
 
 把“录音—转写—AI 整理—编辑—导出”收束为一条可理解、可恢复的工作流。成功意味着用户无需接触命令行，即可得到可编辑的 Obsidian 风格 Markdown 文件。
+
+## Goals and Non-goals
+
+- 目标：本地资料优先、AI 可替换、Markdown 可移植、失败后源文件仍可用。
+- V1 非目标：账号、云同步、实时字幕、说话人分离、自动转码、长音频切片、模型内置和云端额度代理。
+
+## Primary Flow
+
+1. 用户录音，或选择/拖入音频、UTF-8 文本。
+2. 音频经配置的转写 Provider 生成文字；文本跳过转写。
+3. 笔记 Provider 生成结构化内容，客户端渲染 Markdown。
+4. 用户编辑、预览，并导出 `.md` 或写入桌面 Obsidian Vault。
+
+异常与恢复以 `docs/BUSINESS_FLOW.md` 为准。
 
 ## Positioning
 
@@ -59,3 +76,12 @@ Flutter 与 Dart，共享 macOS、Windows、Android 的 UI 和业务逻辑；平
 ## Accessibility & Inclusion
 
 使用语义标签、系统字体缩放、键盘焦点与不依赖颜色的状态文字；Android 触控目标不小于 48dp。
+
+## V1 Acceptance
+
+- 录音、音频导入、UTF-8 文本导入三种入口可进入统一工作流。
+- 文本跳过转写；音频调用用户配置的转写服务。
+- AI 设置区分本地/在线，密钥不进入源码或普通偏好。
+- Markdown 可编辑、预览、导出；桌面 Vault 写入不覆盖同名文件。
+- macOS 与 Windows 可从公开 Release 获得安装资产。
+- Android 若没有真实设备证据，必须标记待实机回归而非已完成。
